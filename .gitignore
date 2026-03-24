@@ -1,3 +1,8 @@
+# Credentials
+.env
+.env.*
+!.env.example
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
@@ -53,3 +58,12 @@
 
 # Utilities
 .idea
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
