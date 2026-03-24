@@ -2,7 +2,7 @@
 
 ## Setup
 
-Run once to initialize the project:
+Run to initialize the project or restart a clean Docker environment. Docker containers, volumes and images will be purged. Project files are preserved.
 
 ```bash
 ./setup_project.sh
