@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+echo "Purging Docker containers, volumes and images..."
+docker compose down --volumes --rmi all 2>/dev/null || true
+
+echo "Purging Symfony files..."
+rm -rf vendor composer.json composer.lock symfony.lock \
+  src config bin public var migrations tests \
+  phpunit.dist.xml compose.override.yaml .env
+
 echo "Building Docker images..."
 docker compose build
 
