@@ -52,19 +52,26 @@
       "automerge": false
     },
     {
-      "description": "Group Symfony packages",
+      "description": "Group Symfony and Doctrine packages",
       "groupName": "symfony packages",
       "matchPackageNames": [
         "/^symfony\//",
-        "/^doctrine\//
+        "/^doctrine\//"
       ]
     },
     {
       "description": "Group PHPUnit and test packages",
       "groupName": "test packages",
       "matchPackageNames": [
-        "/^phpunit\//",
-        "/^pact-foundation\//"
+        "/^phpunit\//"
+      ]
+    },
+    {
+      "description": "Group Docker base images",
+      "groupName": "docker images",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
       ]
     },
     {
