@@ -7,6 +7,13 @@
 # To list all registered routes, run the following command:
 #   bin/console debug:router
 
+root_redirect:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        route: index
+        permanent: false
+
 controllers:
     resource:
         path: ../src/Controller/
