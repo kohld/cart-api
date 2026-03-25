@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/carts')]
-final class CartController extends AbstractApiController
+final class CartController extends AbstractController
 {
 }
