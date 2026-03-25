@@ -7,6 +7,7 @@ A RESTful shopping cart API built with Symfony 8 and PostgreSQL. Supports JWT au
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
+- [API Documentation](#api-documentation)
 - [Development](#development)
   - [Code Style](#code-style)
   - [Fixtures](#fixtures)
@@ -42,6 +43,21 @@ The API is available at: http://localhost:8080
 ```bash
 make down
 ```
+
+## API Documentation
+
+Swagger/OpenAPI was skipped for this project. Instead, the API is documented via README and an Insomnia export.
+
+API documentation is provided in two forms:
+
+- **README** — all endpoints are documented below with request and response examples
+- **Insomnia Export** — a ready-to-import collection is available at `docs/insomnia.json` for local testing
+
+### Endpoints
+
+> Full endpoint documentation will be added as the API is implemented.
+
+---
 
 ## Development
 
