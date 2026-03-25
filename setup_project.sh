@@ -8,7 +8,7 @@ echo "Building Docker images..."
 docker compose build
 
 echo "Installing dependencies..."
-docker compose run --rm app composer install
+docker compose run --rm app composer install --no-scripts
 
 echo "Starting services..."
 docker compose up -d
