@@ -10,6 +10,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class IndexController extends AbstractController
 {
+    /**
+     * API index endpoint.
+     *
+     * Returns basic information about the cart API including name, version, and health endpoint.
+     *
+     * @return JsonResponse JSON response containing API metadata
+     */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(): JsonResponse
     {
