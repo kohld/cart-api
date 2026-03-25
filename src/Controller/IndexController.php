@@ -20,10 +20,14 @@ final class IndexController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(): JsonResponse
     {
-        return $this->json([
+        $response = $this->json([
             'name' => 'cart-api',
             'version' => '1.0.0',
             'health' => '/api/v1/health',
         ]);
+
+        $response->headers->set('Cache-Control', 'public, max-age=3600');
+
+        return $response;
     }
 }

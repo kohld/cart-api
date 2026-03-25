@@ -45,12 +45,16 @@ final class HealthController extends AbstractController
 
         $healthy = self::OK === $databaseStatus;
 
-        return $this->json(
+        $response = $this->json(
             [
                 'status' => $healthy ? self::OK : self::ERROR,
                 'database' => $databaseStatus,
             ],
             $healthy ? Response::HTTP_OK : Response::HTTP_SERVICE_UNAVAILABLE,
         );
+
+        $response->headers->set('Cache-Control', 'public, max-age=60');
+
+        return $response;
     }
 }
