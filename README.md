@@ -10,6 +10,7 @@ A RESTful shopping cart API built with Symfony 8 and PostgreSQL. Supports JWT au
 - [Development](#development)
   - [Code Style](#code-style)
   - [Fixtures](#fixtures)
+  - [Makefile](#makefile)
 
 ---
 
@@ -32,30 +33,39 @@ Run once to initialize the project, or again to restart a clean Docker environme
 
 **Start:**
 ```bash
-docker compose up -d
+make up
 ```
 
 The API is available at: http://localhost:8080
 
 **Stop:**
 ```bash
-docker compose down
+make down
 ```
 
 ## Development
+
+### Makefile
+
+All common commands are available via `make`:
+
+| Command | Description |
+|---|---|
+| `make setup` | Purge Docker and reinitialize the project |
+| `make up` | Start all containers |
+| `make down` | Stop all containers |
+| `make migrate` | Run database migrations |
+| `make fixtures` | Load sample data (purges existing data) |
+| `make cs-fix` | Fix code style violations automatically |
+| `make cs-check` | Check for code style violations |
 
 ### Code Style
 
 Code style is enforced via [PHP CS Fixer](https://cs.symfony.com) using the Symfony ruleset (a superset of PSR-12). A GitHub Action runs on every push and pull request.
 
-Check for violations:
 ```bash
-docker compose run --rm app vendor/bin/php-cs-fixer fix --dry-run --diff
-```
-
-Fix violations automatically:
-```bash
-docker compose run --rm app vendor/bin/php-cs-fixer fix
+make cs-check
+make cs-fix
 ```
 
 ### Fixtures
@@ -63,7 +73,7 @@ docker compose run --rm app vendor/bin/php-cs-fixer fix
 Load sample refurbished hardware products into the database:
 
 ```bash
-docker compose run --rm app php bin/console doctrine:fixtures:load --no-interaction
+make fixtures
 ```
 
 > Warning: This will purge all existing data before loading the fixtures.
