@@ -7,6 +7,11 @@ docker compose down --volumes --rmi all 2>/dev/null || true
 echo "Building Docker images..."
 docker compose build
 
+if [ ! -f .env ]; then
+  echo "Creating .env from .env.example..."
+  cp .env.example .env
+fi
+
 echo "Installing dependencies..."
 docker compose run --rm app composer install --no-scripts
 
