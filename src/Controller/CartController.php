@@ -19,7 +19,7 @@ final class CartController extends AbstractController
     ) {
     }
 
-    #[Route('', methods: ['GET'])]
+    #[Route('/me', methods: ['GET'])]
     public function show(): JsonResponse
     {
         // Get authenticated user via $this->getUser()
@@ -29,7 +29,7 @@ final class CartController extends AbstractController
         // Set Cache-Control: no-store
     }
 
-    #[Route('/items', methods: ['POST'])]
+    #[Route('/me/items', methods: ['POST'])]
     public function addItem(): JsonResponse
     {
         // Validate request via #[MapRequestPayload] AddCartItemRequest
@@ -42,7 +42,7 @@ final class CartController extends AbstractController
         // Set Cache-Control: no-store
     }
 
-    #[Route('/items/{id}', methods: ['PATCH'])]
+    #[Route('/me/items/{id}', methods: ['PATCH'])]
     public function updateItem(string $id): JsonResponse
     {
         // Validate request via #[MapRequestPayload] UpdateCartItemRequest
@@ -54,7 +54,7 @@ final class CartController extends AbstractController
         // Set Cache-Control: no-store
     }
 
-    #[Route('/items/{id}', methods: ['DELETE'])]
+    #[Route('/me/items/{id}', methods: ['DELETE'])]
     public function removeItem(string $id): JsonResponse
     {
         // Get authenticated user via $this->getUser()

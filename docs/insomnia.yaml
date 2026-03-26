@@ -141,7 +141,7 @@ collection:
       sortKey: -1774442093155.5
       description: ""
     children:
-      - url: http://localhost:8080/api/v1/carts
+      - url: http://localhost:8080/api/v1/carts/me
         name: Get Cart
         meta:
           id: req_2d34603cc4fc4d6d901c55dd66819b0f
@@ -167,7 +167,7 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/v1/carts/items
+      - url: http://localhost:8080/api/v1/carts/me/items
         name: Add CartItem
         meta:
           id: req_4374824a88bd416a8bd8300fe796aa22
@@ -202,7 +202,7 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/v1/carts/items/REF-001
+      - url: http://localhost:8080/api/v1/carts/me/items/REF-001
         name: Update CartItem
         meta:
           id: req_1de8c6d4544a433a9c42ebecff504623
@@ -236,7 +236,7 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/api/v1/carts/items/REF-001
+      - url: http://localhost:8080/api/v1/carts/me/items/REF-001
         name: Remove CartItem
         meta:
           id: req_fe1390d4ede9465aa87b33aeae10d646

@@ -15,9 +15,10 @@ Each registered user gets a dedicated cart, similar to how Amazon handles shoppi
   - [Fixtures](#fixtures)
   - [Makefile](#makefile)
 - [Decisions](#decisions)
-  - [Cart without User association](#cart-without-user-association)
+  - [Cart with User association](#cart-with-user-association)
   - [PHP 8.4 property hooks](#php-84-property-hooks)
   - [No checkout endpoint](#no-checkout-endpoint)
+  - [Cart URL design: `/me` vs. explicit cart UUID](#cart-url-design-me-vs-explicit-cart-uuid)
   - [PATCH instead of PUT](#patch-instead-of-put)
 - [Learnings](#learnings)
   - [JWT (Symfony Integration with LexikJWT)](#jwt-symfony-integration-with-lexikjwt)
@@ -124,7 +125,7 @@ Public. Returns a JWT token.
 </details>
 
 <details>
-<summary>GET /api/v1/carts</summary>
+<summary>GET /api/v1/carts/me</summary>
 
 Requires authentication. Returns the cart of the authenticated user.
 
@@ -155,7 +156,7 @@ Authorization: Bearer <token>
 </details>
 
 <details>
-<summary>POST /api/v1/carts/items</summary>
+<summary>POST /api/v1/carts/me/items</summary>
 
 Requires authentication. Adds a product to the cart. If the product is already in the cart, the quantity is increased by the given amount.
 
@@ -170,13 +171,13 @@ Authorization: Bearer <token>
     "quantity": 1
 }
 
-// 201 - returns updated cart (same as GET /api/v1/carts)
+// 201 - returns updated cart (same as GET /api/v1/carts/me)
 ```
 
 </details>
 
 <details>
-<summary>PATCH /api/v1/carts/items/{id}</summary>
+<summary>PATCH /api/v1/carts/me/items/{id}</summary>
 
 Requires authentication. Updates the quantity of a cart item.
 
@@ -190,13 +191,13 @@ Authorization: Bearer <token>
     "quantity": 3
 }
 
-// 200 - returns updated cart (same as GET /api/v1/carts)
+// 200 - returns updated cart (same as GET /api/v1/carts/me)
 ```
 
 </details>
 
 <details>
-<summary>DELETE /api/v1/carts/items/{id}</summary>
+<summary>DELETE /api/v1/carts/me/items/{id}</summary>
 
 Requires authentication. Removes an item from the cart.
 
@@ -255,7 +256,7 @@ make fixtures
 
 ## Decisions
 
-### Cart without User association
+### Cart with User association
 
 Without a user association, the cart is identified only by its UUID.  
 The client receives the UUID on creation and sends it with every request in the URL.
@@ -281,9 +282,26 @@ This project has no payment/discount logic, no order process and no Order entity
 
 Checkout goes beyond the requirements of this proof of concept.
 
+### Cart URL design: `/me` vs. explicit cart UUID
+
+Two approaches were considered for the cart endpoints:
+
+**Option A: `/api/v1/carts/{cartId|cartUuid}/items`**  
+Strictly RESTful, where the cart is a named resource with its own UUID. Which works well if a user can have multiple
+carts.
+
+**Option B: `/api/v1/carts/me/items`**  
+Uses the `/me` convention, widely adopted by APIs like Spotify and GitHub for "the current user's resource".  
+Self-documenting and removes the need for the client to manage a cart UUID.
+
+Since each user has exactly one cart, tied to their JWT token, exposing a cart UUID in the URL adds no value and forces
+the client to first fetch the cart UUID before making any item requests.
+
+`/me` was chosen as the cleaner and more practical approach for this 1:1 relationship of User and Cart entities.
+
 ### PATCH instead of PUT
 
-`PATCH /api/v1/carts/items/{id}` only updates the `quantity` field.  
+`PATCH /api/v1/carts/me/items/{id}` only updates the `quantity` field.  
 The complete resource is not sent or replaced.
 
 `PUT` implies a full resource replacement and would require all fields to be included in the request. `PATCH` is the semantically correct choice for partial updates.
