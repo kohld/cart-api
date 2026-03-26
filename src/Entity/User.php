@@ -11,6 +11,12 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
+/**
+ * User entity representing application users.
+ * Each user has a unique email, password, and an associated shopping cart.
+ *
+ * Implements Symfony UserInterface for authentication and PasswordAuthenticatedUserInterface for password handling.
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 final class User implements UserInterface, PasswordAuthenticatedUserInterface
