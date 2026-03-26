@@ -18,6 +18,7 @@ Each registered user gets a dedicated cart, similar to how Amazon handles shoppi
   - [Cart without User association](#cart-without-user-association)
   - [PHP 8.4 property hooks](#php-84-property-hooks)
   - [No checkout endpoint](#no-checkout-endpoint)
+  - [PATCH instead of PUT](#patch-instead-of-put)
 - [Learnings](#learnings)
   - [JWT (Symfony Integration with LexikJWT)](#jwt-symfony-integration-with-lexikjwt)
   - [MapRequestPayload](#maprequestpayload)
@@ -62,11 +63,152 @@ Swagger/OpenAPI was skipped for this project. Instead, the API is documented via
 API documentation is provided in two forms:
 
 - **README:** all endpoints are documented below with request and response examples
-- **Insomnia Export:** a ready-to-import collection is available at `docs/insomnia.json` for local testing
+- **Insomnia Export:** a ready-to-import collection is available at `docs/insomnia.yaml` for local testing
 
 ### Endpoints
 
-> Full endpoint documentation will be added as the API is implemented.
+<details>
+<summary>GET /api/v1/health</summary>
+
+Public. Returns API and database status.
+
+```json
+// 200
+{ "status": "ok", "database": "ok" }
+
+// 503
+{ "status": "error", "database": "unavailable" }
+```
+
+</details>
+
+<details>
+<summary>POST /api/v1/auth/register</summary>
+
+Public. Creates a new user and an associated cart.
+
+```json
+// Request
+{
+    "email": "user@example.com",
+    "plainPassword": "yourpassword"
+}
+
+// 201
+{
+    "id": "uuid",
+    "email": "user@example.com"
+}
+```
+
+</details>
+
+<details>
+<summary>POST /api/v1/auth/login</summary>
+
+Public. Returns a JWT token.
+
+```json
+// Request
+{
+    "email": "user@example.com",
+    "password": "yourpassword"
+}
+
+// 200
+{
+    "token": "eyJ..."
+}
+```
+
+</details>
+
+<details>
+<summary>GET /api/v1/carts</summary>
+
+Requires authentication. Returns the cart of the authenticated user.
+
+```
+Authorization: Bearer <token>
+```
+
+```json
+// 200
+{
+    "id": "uuid",
+    "items": [
+        {
+            "id": "uuid",
+            "product": {
+                "id": "uuid",
+                "name": "iPhone 14 Pro (refurbished)",
+                "articleNumber": "APL-IP14P-256-SG"
+            },
+            "quantity": 2,
+            "price": "649.99"
+        }
+    ],
+    "total": "1299.98"
+}
+```
+
+</details>
+
+<details>
+<summary>POST /api/v1/carts/items</summary>
+
+Requires authentication. Adds a product to the cart. If the product is already in the cart, the quantity is increased by the given amount.
+
+```
+Authorization: Bearer <token>
+```
+
+```json
+// Request
+{
+    "productId": "uuid",
+    "quantity": 1
+}
+
+// 201 - returns updated cart (same as GET /api/v1/carts)
+```
+
+</details>
+
+<details>
+<summary>PATCH /api/v1/carts/items/{id}</summary>
+
+Requires authentication. Updates the quantity of a cart item.
+
+```
+Authorization: Bearer <token>
+```
+
+```json
+// Request
+{
+    "quantity": 3
+}
+
+// 200 - returns updated cart (same as GET /api/v1/carts)
+```
+
+</details>
+
+<details>
+<summary>DELETE /api/v1/carts/items/{id}</summary>
+
+Requires authentication. Removes an item from the cart.
+
+```
+Authorization: Bearer <token>
+```
+
+```
+// 204 No Content
+```
+
+</details>
 
 ---
 
@@ -135,6 +277,13 @@ A checkout endpoint was intentionally left out.
 This project has no payment/discount logic, no order process and no Order entity.
 
 Checkout goes beyond the requirements of this proof of concept.
+
+### PATCH instead of PUT
+
+`PATCH /api/v1/carts/items/{id}` only updates the `quantity` field.  
+The complete resource is not sent or replaced.
+
+`PUT` implies a full resource replacement and would require all fields to be included in the request. `PATCH` is the semantically correct choice for partial updates.
 
 ---
 
