@@ -1,0 +1,277 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Cart API
+meta:
+  id: wrk_6086fc37596c49119ea79b794481d24c
+  created: 1774428963143
+  modified: 1774445001234
+  description: ""
+collection:
+  - name: Status
+    meta:
+      id: fld_6d3b579f258d4194a0e6725facd4668e
+      created: 1774442090200
+      modified: 1774442123221
+      sortKey: -1774442090200
+      description: ""
+    children:
+      - url: http://localhost:8080/api/v1/health
+        name: Health
+        meta:
+          id: req_3f556e06e54a4d658cab75c130ac9929
+          created: 1774428963202
+          modified: 1774442120020
+          isPrivate: false
+          description: ""
+          sortKey: -1774442119986
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/
+        name: Index (common information)
+        meta:
+          id: req_e4737f554e7e41d6bcfc41e6560db09c
+          created: 1774445434797
+          modified: 1774445457030
+          isPrivate: false
+          description: ""
+          sortKey: -1774445434797
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_0da42789b80446db9d55badc13605744
+      created: 1774442096111
+      modified: 1774445023184
+      sortKey: -1774442096111
+      description: ""
+    children:
+      - url: http://localhost:8080/api/v1/auth/register
+        name: Register User
+        meta:
+          id: req_fc7cc6b3f2cc44a497d68e353a99d86e
+          created: 1774507822963
+          modified: 1774508186684
+          isPrivate: false
+          description: ""
+          sortKey: -1774507822963
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "Rylan-Hackett53@example.com",
+            	"plainPassword": "H2po9jQ8s0kQMs5"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/auth/login
+        name: Login User
+        meta:
+          id: req_dabd4e7ce07d4d86a0002635dc1b71df
+          created: 1774508027664
+          modified: 1774510114517
+          isPrivate: false
+          description: ""
+          sortKey: -1774476628880
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "Rylan-Hackett53@example.com",
+            	"password": "H2po9jQ8s0kQMs5"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Cart
+    meta:
+      id: fld_983866e8e9e04bffb74a16be44e6a1d3
+      created: 1774442102374
+      modified: 1774442115921
+      sortKey: -1774442093155.5
+      description: ""
+    children:
+      - url: http://localhost:8080/api/v1/carts
+        name: Get Cart
+        meta:
+          id: req_2d34603cc4fc4d6d901c55dd66819b0f
+          created: 1774512490551
+          modified: 1774512737608
+          isPrivate: false
+          description: ""
+          sortKey: -1774512492641
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzQ1MTAyODQsImV4cCI6MTc3NDUyNDY4NCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiUnlsYW4tSGFja2V0dDUzQGV4YW1wbGUuY29tIn0.XkanrHEhu5NAbeZhujww3hEzvVCwpd6HvX27JH-yawxzSPEQ0Ciys9Z_89Nv8VjwGEpqsnjkUb4dVweKCjzWR9ddGm3GAEK46ORl55eS7a5hFfesbstz1wj6ycWGkfdnq2YR0jyIc8UfuBQUQCvXDtKKS0NLLT5U7zdOA3CPT16Gwj2-_dL2tdD5Y3zDVtwINonPJAUhDhdvW514V1JOqefV38b9YUwzwcqNloqKuLnXavJcqbyJQXLljw548ea75AcXPekSYcRbByM9__ioSVNHZ_zV2kFL2fPRKS8U0wAU4vZ0K7d-1848reSgDo9Z5rdPD3jJ1tveJHwbVREklQ
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/carts/items
+        name: Add CartItem
+        meta:
+          id: req_4374824a88bd416a8bd8300fe796aa22
+          created: 1774512593830
+          modified: 1774512982712
+          isPrivate: false
+          description: ""
+          sortKey: -1774510157802
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "productId": "REF-001",
+                "quantity": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzQ1MTAyODQsImV4cCI6MTc3NDUyNDY4NCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiUnlsYW4tSGFja2V0dDUzQGV4YW1wbGUuY29tIn0.XkanrHEhu5NAbeZhujww3hEzvVCwpd6HvX27JH-yawxzSPEQ0Ciys9Z_89Nv8VjwGEpqsnjkUb4dVweKCjzWR9ddGm3GAEK46ORl55eS7a5hFfesbstz1wj6ycWGkfdnq2YR0jyIc8UfuBQUQCvXDtKKS0NLLT5U7zdOA3CPT16Gwj2-_dL2tdD5Y3zDVtwINonPJAUhDhdvW514V1JOqefV38b9YUwzwcqNloqKuLnXavJcqbyJQXLljw548ea75AcXPekSYcRbByM9__ioSVNHZ_zV2kFL2fPRKS8U0wAU4vZ0K7d-1848reSgDo9Z5rdPD3jJ1tveJHwbVREklQ
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/carts/items/REF-001
+        name: Update CartItem
+        meta:
+          id: req_1de8c6d4544a433a9c42ebecff504623
+          created: 1774512661624
+          modified: 1774512933845
+          isPrivate: false
+          description: ""
+          sortKey: -1774508990382.5
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "quantity": 3
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzQ1MTAyODQsImV4cCI6MTc3NDUyNDY4NCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiUnlsYW4tSGFja2V0dDUzQGV4YW1wbGUuY29tIn0.XkanrHEhu5NAbeZhujww3hEzvVCwpd6HvX27JH-yawxzSPEQ0Ciys9Z_89Nv8VjwGEpqsnjkUb4dVweKCjzWR9ddGm3GAEK46ORl55eS7a5hFfesbstz1wj6ycWGkfdnq2YR0jyIc8UfuBQUQCvXDtKKS0NLLT5U7zdOA3CPT16Gwj2-_dL2tdD5Y3zDVtwINonPJAUhDhdvW514V1JOqefV38b9YUwzwcqNloqKuLnXavJcqbyJQXLljw548ea75AcXPekSYcRbByM9__ioSVNHZ_zV2kFL2fPRKS8U0wAU4vZ0K7d-1848reSgDo9Z5rdPD3jJ1tveJHwbVREklQ
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/v1/carts/items/REF-001
+        name: Remove CartItem
+        meta:
+          id: req_fe1390d4ede9465aa87b33aeae10d646
+          created: 1774512714883
+          modified: 1774512952558
+          isPrivate: false
+          description: ""
+          sortKey: -1774508406672.75
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzQ1MTAyODQsImV4cCI6MTc3NDUyNDY4NCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiUnlsYW4tSGFja2V0dDUzQGV4YW1wbGUuY29tIn0.XkanrHEhu5NAbeZhujww3hEzvVCwpd6HvX27JH-yawxzSPEQ0Ciys9Z_89Nv8VjwGEpqsnjkUb4dVweKCjzWR9ddGm3GAEK46ORl55eS7a5hFfesbstz1wj6ycWGkfdnq2YR0jyIc8UfuBQUQCvXDtKKS0NLLT5U7zdOA3CPT16Gwj2-_dL2tdD5Y3zDVtwINonPJAUhDhdvW514V1JOqefV38b9YUwzwcqNloqKuLnXavJcqbyJQXLljw548ea75AcXPekSYcRbByM9__ioSVNHZ_zV2kFL2fPRKS8U0wAU4vZ0K7d-1848reSgDo9Z5rdPD3jJ1tveJHwbVREklQ
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_961ebac0cf0fc57c7cbe0020eb701a4b1bee2f65
+    created: 1774428963154
+    modified: 1774428963154
+environments:
+  name: Base Environment
+  meta:
+    id: env_961ebac0cf0fc57c7cbe0020eb701a4b1bee2f65
+    created: 1774428963151
+    modified: 1774428963151
+    isPrivate: false
