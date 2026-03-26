@@ -229,6 +229,7 @@ All common commands are available via `make`:
 | `make cs-check` | Check for code style violations |
 | `make test` | Run the test suite |
 | `make test-coverage` | Run tests and generate HTML coverage report in `var/coverage` |
+| `make analyse` | Run PHPStan static analysis |
 
 ### Code Style
 
