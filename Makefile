@@ -1,4 +1,4 @@
-.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys test test-coverage
+.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
 
 setup:
 	./setup_project.sh
@@ -29,3 +29,6 @@ test:
 
 test-coverage:
 	docker compose exec app bin/phpunit --coverage-html var/coverage
+
+analyse:
+	docker compose exec app vendor/bin/phpstan analyse --no-progress
