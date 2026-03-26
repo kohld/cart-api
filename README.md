@@ -36,7 +36,7 @@ Each registered user gets a dedicated cart, similar to how Amazon handles shoppi
 Run once to initialize the project, or again to restart a clean Docker environment. Docker containers, volumes and images will be purged. Project files are preserved.
 
 ```bash
-./setup_project.sh
+make setup
 ```
 
 > During setup, a prompt may appear: **Docker configuration from recipes**.
