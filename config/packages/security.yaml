@@ -14,6 +14,11 @@ security:
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
 
+        public:
+            pattern: ^/(api/v1/health|api/v1/auth/register|api/v1/$|$)
+            stateless: true
+            security: false
+
         login:
             pattern: ^/api/v1/auth/login
             stateless: true
