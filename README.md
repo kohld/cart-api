@@ -16,6 +16,10 @@ Each registered user gets a dedicated cart, similar to how Amazon handles shoppi
   - [Makefile](#makefile)
 - [Decisions](#decisions)
   - [Cart without User association](#cart-without-user-association)
+  - [PHP 8.4 Property Hooks](#php-84-property-hooks)
+- [Learnings](#learnings)
+  - [JWT (Symfony Integration with LexikJWT)](#jwt-symfony-integration-with-lexikjwt)
+  - [MapRequestPayload](#maprequestpayload)
 
 ---
 
@@ -116,3 +120,23 @@ The client receives the UUID on creation and sends it with every request in the 
 - Ownership check
 
 **But:** Anyone who knows the UUID can view and manipulate the cart. This means no protection for buyers.
+
+### PHP 8.4 Property Hooks
+
+PHP 8.4 introduced property hooks, allowing `get` and `set` logic directly on class properties without separate
+getter/setter methods. Doctrine and Symfony do not yet fully support them.
+
+Classical getters and setters were used in this project to avoid potential compatibility issues.
+
+---
+
+## Learnings
+
+### JWT (Symfony Integration with LexikJWT)
+
+The generated token is sent with every subsequent request via the `Authorization: Bearer` header and validated 
+automatically by the JWT firewall.
+
+### MapRequestPayload
+
+Introduced in Symfony 6.3, this attribute replaces manual request DTO deserialization and validation in one step.
