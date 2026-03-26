@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-scripts
 
+      - name: Create .env
+        run: cp .env.example .env
+
       - name: Run tests
         run: vendor/bin/phpunit
