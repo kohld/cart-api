@@ -1,4 +1,4 @@
-.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys
+.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys test test-coverage
 
 setup:
 	./setup_project.sh
@@ -23,3 +23,9 @@ cs-check:
 
 jwt-keys:
 	docker compose exec app bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+test:
+	docker compose exec app bin/phpunit
+
+test-coverage:
+	docker compose exec app bin/phpunit --coverage-html var/coverage
