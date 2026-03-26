@@ -1,4 +1,4 @@
-.PHONY: setup up down migrate fixtures cs-fix cs-check
+.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys
 
 setup:
 	./setup_project.sh
@@ -20,3 +20,6 @@ cs-fix:
 
 cs-check:
 	docker compose run --rm app vendor/bin/php-cs-fixer fix --dry-run --diff
+
+jwt-keys:
+	docker compose exec app bin/console lexik:jwt:generate-keypair --skip-if-exists

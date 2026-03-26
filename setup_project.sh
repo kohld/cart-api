@@ -18,5 +18,11 @@ docker compose run --rm app composer install --no-scripts
 echo "Starting services..."
 docker compose up -d
 
+echo "Generating JWT keys..."
+make jwt-keys
+
+echo "Running migrations..."
+make migrate
+
 echo ""
 echo "Setup complete! API available at http://localhost:8080"
