@@ -20,7 +20,7 @@ jobs:
           extensions: pdo, pdo_pgsql
 
       - name: Install dependencies
-        run: composer install --no-interaction
+        run: composer install --no-interaction --no-scripts
 
       - name: Run tests
         run: vendor/bin/phpunit
