@@ -2,7 +2,8 @@
 
 A RESTful shopping cart API built with Symfony 8 and PostgreSQL.
 
-Each registered user gets a dedicated cart, similar to how Amazon handles shopping carts. There is no guest or anonymous cart functionality: a user account is required to interact with the cart. Authentication is handled via JWT.
+Each registered user gets a dedicated cart, similar to how Amazon handles shopping carts. There is no guest or anonymous
+cart functionality: a user account is required to interact with the cart. Authentication is handled via JWT.
 
 ## Table of Contents
 
@@ -33,7 +34,8 @@ Each registered user gets a dedicated cart, similar to how Amazon handles shoppi
 
 ## Setup
 
-Run once to initialize the project, or again to restart a clean Docker environment. Docker containers, volumes and images will be purged. Project files are preserved.
+Run once to initialize the project, or again to restart a clean Docker environment. Docker containers, volumes and
+images will be purged. Project files are preserved.
 
 ```bash
 make setup
@@ -158,7 +160,8 @@ Authorization: Bearer <token>
 <details>
 <summary>POST /api/v1/carts/me/items</summary>
 
-Requires authentication. Adds a product to the cart. If the product is already in the cart, the quantity is increased by the given amount.
+Requires authentication. Adds a product to the cart. If the product is already in the cart, the quantity is increased by
+the given amount.
 
 ```
 Authorization: Bearer <token>
@@ -304,7 +307,8 @@ the client to first fetch the cart UUID before making any item requests.
 `PATCH /api/v1/carts/me/items/{id}` only updates the `quantity` field.  
 The complete resource is not sent or replaced.
 
-`PUT` implies a full resource replacement and would require all fields to be included in the request. `PATCH` is the semantically correct choice for partial updates.
+`PUT` implies a full resource replacement and would require all fields to be included in the request. `PATCH` is the
+semantically correct choice for partial updates.
 
 ---
 
