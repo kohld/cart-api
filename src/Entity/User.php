@@ -27,7 +27,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password;
 
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Cart::class, cascade: ['persist'])]
+    #[ORM\OneToOne(targetEntity: Cart::class, mappedBy: 'user', cascade: ['persist'])]
     private ?Cart $cart = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
