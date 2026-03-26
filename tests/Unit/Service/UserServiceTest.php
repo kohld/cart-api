@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service;
 
-use App\DTO\Request\RegisterRequest;
+use App\DTO\Request\RegisterRequest as RegisterRequestDto;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -30,7 +30,7 @@ final class UserServiceTest extends TestCase
 
     public function testRegisterCreatesUserWithHashedPassword(): void
     {
-        $request = new RegisterRequest();
+        $request = new RegisterRequestDto();
         $request->email = 'test@example.com';
         $request->plainPassword = 'password123';
 
