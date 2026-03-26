@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,12 +32,6 @@ final class HealthController extends AbstractController
             $databaseStatus = self::UNAVAILABLE;
             error_log(sprintf(
                 'Database connection failed: %s',
-                $e->getMessage()
-            ));
-        } catch (Exception $e) {
-            $databaseStatus = self::UNAVAILABLE;
-            error_log(sprintf(
-                'Unexpected error in health check: %s',
                 $e->getMessage()
             ));
         }
