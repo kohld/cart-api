@@ -1,4 +1,4 @@
-.PHONY: setup up down migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
+.PHONY: setup up down migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
 
 setup:
 	./setup_project.sh
@@ -8,6 +8,9 @@ up:
 
 down:
 	docker compose down
+
+migration:
+	docker compose exec app bin/console doctrine:migrations:diff
 
 migrate:
 	docker compose exec app bin/console doctrine:migrations:migrate --no-interaction

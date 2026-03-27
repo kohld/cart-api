@@ -26,6 +26,7 @@ final class Cart
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
+    /** @var Collection<int, CartItem> */
     #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart', cascade: ['persist', 'remove'])]
     private Collection $items;
 
@@ -49,6 +50,7 @@ final class Cart
         return $this->user;
     }
 
+    /** @return Collection<int, CartItem> */
     public function getItems(): Collection
     {
         return $this->items;

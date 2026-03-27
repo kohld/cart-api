@@ -227,6 +227,7 @@ All common commands are available via `make`:
 | `make setup` | Purge Docker and reinitialize the project |
 | `make up` | Start all containers |
 | `make down` | Stop all containers |
+| `make migration` | Generate a new migration based on entity changes |
 | `make migrate` | Run database migrations |
 | `make fixtures` | Load sample data (purges existing data) |
 | `make cs-fix` | Fix code style violations automatically |
