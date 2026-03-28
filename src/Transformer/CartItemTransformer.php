@@ -8,7 +8,7 @@ use App\DTO\Response\CartItemResponse as CartItemResponseDto;
 use App\DTO\Response\ProductResponse;
 use App\Entity\CartItem;
 
-final class CartItemTransformer
+final readonly class CartItemTransformer
 {
     public function toCartItemResponseDto(CartItem $cartItem): CartItemResponseDto
     {

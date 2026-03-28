@@ -7,7 +7,7 @@ namespace App\Transformer;
 use App\DTO\Response\CartResponse as CartResponseDto;
 use App\Entity\Cart;
 
-final class CartTransformer
+final readonly class CartTransformer
 {
     public function __construct(
         private readonly CartItemTransformer $cartItemTransformer,
