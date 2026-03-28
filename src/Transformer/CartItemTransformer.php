@@ -5,13 +5,25 @@ declare(strict_types=1);
 namespace App\Transformer;
 
 use App\DTO\Response\CartItemResponse as CartItemResponseDto;
+use App\DTO\Response\ProductResponse;
 use App\Entity\CartItem;
 
 final class CartItemTransformer
 {
     public function toCartItemResponseDto(CartItem $cartItem): CartItemResponseDto
     {
-        // Map CartItem to CartItemResponse DTO
-        // id, product (id, name, articleNumber), quantity, price
+        $product = $cartItem->getProduct();
+
+        return new CartItemResponseDto(
+            id: (string) $cartItem->getId(),
+            product: new ProductResponse(
+                id: (string) $product->getId(),
+                articleNumber: $product->getArticleNumber(),
+                name: $product->getName(),
+                price: $product->getPrice(),
+            ),
+            quantity: $cartItem->getQuantity(),
+            price: $cartItem->getPrice(),
+        );
     }
 }

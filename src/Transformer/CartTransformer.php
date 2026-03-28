@@ -16,7 +16,20 @@ final class CartTransformer
 
     public function toCartResponseDto(Cart $cart): CartResponseDto
     {
-        // Map Cart to CartResponse DTO
-        // id, items (via CartItemTransformer), total (sum of item prices * quantities)
+        $items = array_map(
+            fn ($item) => $this->cartItemTransformer->toCartItemResponseDto($item),
+            $cart->getItems()->toArray(),
+        );
+
+        $total = '0.00';
+        foreach ($cart->getItems() as $item) {
+            $total = bcadd($total, bcmul($item->getPrice(), (string) $item->getQuantity(), 2), 2);
+        }
+
+        return new CartResponseDto(
+            id: (string) $cart->getId(),
+            items: $items,
+            total: $total,
+        );
     }
 }
