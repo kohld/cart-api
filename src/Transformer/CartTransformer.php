@@ -10,7 +10,7 @@ use App\Entity\Cart;
 final readonly class CartTransformer
 {
     public function __construct(
-        private readonly CartItemTransformer $cartItemTransformer,
+        private CartItemTransformer $cartItemTransformer,
     ) {
     }
 
