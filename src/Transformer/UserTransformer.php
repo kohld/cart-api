@@ -7,7 +7,7 @@ namespace App\Transformer;
 use App\DTO\Response\UserResponse as UserResponseDto;
 use App\Entity\User;
 
-final class UserTransformer
+final readonly class UserTransformer
 {
     public function toUserResponseDto(User $user): UserResponseDto
     {
