@@ -227,6 +227,8 @@ All common commands are available via `make`:
 | `make setup` | Purge Docker and reinitialize the project |
 | `make up` | Start all containers |
 | `make down` | Stop all containers |
+| `make composer-install` | Install dependencies from lock file |
+| `make composer-update` | Update dependencies and lock file |
 | `make migration` | Generate a new migration based on entity changes |
 | `make migrate` | Run database migrations |
 | `make fixtures` | Load sample data (purges existing data) |

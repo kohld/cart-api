@@ -1,4 +1,4 @@
-.PHONY: setup up down migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
+.PHONY: setup up down composer-install composer-update migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
 
 setup:
 	./setup_project.sh
@@ -8,6 +8,12 @@ up:
 
 down:
 	docker compose down
+
+composer-install:
+	docker compose exec app composer install
+
+composer-update:
+	docker compose exec app composer update
 
 migration:
 	docker compose exec app bin/console doctrine:migrations:diff
