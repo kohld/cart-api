@@ -25,6 +25,7 @@ cart functionality: a user account is required to interact with the cart. Authen
 - [Learnings](#learnings)
   - [JWT (Symfony Integration with LexikJWT)](#jwt-symfony-integration-with-lexikjwt)
   - [MapRequestPayload](#maprequestpayload)
+  - [HATEOAS](#hateoas)
 - [Disclaimer](#disclaimer)
   - [AI Usage](#ai-usage)
 
@@ -357,6 +358,11 @@ automatically by the JWT firewall.
 ### MapRequestPayload
 
 Introduced in Symfony 6.3, this attribute replaces manual request DTO deserialization and validation in one step.
+
+### HATEOAS
+
+HATEOAS enriches responses with `_links` to related actions, so the client navigates the API without constructing URLs
+manually.
 
 ---
 
