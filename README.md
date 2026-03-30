@@ -1,5 +1,9 @@
 # Cart API
 
+![PHPStan](https://img.shields.io/github/actions/workflow/status/kohld/cart-api/phpstan.yml?branch=main&style=flat-square&label=PHPStan)
+![PHP CS Fixer](https://img.shields.io/github/actions/workflow/status/kohld/cart-api/php-cs-fixer.yml?branch=main&style=flat-square&label=CS+Fixer)
+![Tests](https://img.shields.io/github/actions/workflow/status/kohld/cart-api/tests.yml?branch=main&style=flat-square&label=Tests)
+
 A RESTful shopping cart API built with Symfony 8 and PostgreSQL.
 
 Each registered user gets a dedicated cart, similar to how Amazon handles shopping carts. There is no guest or anonymous
