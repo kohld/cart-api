@@ -40,4 +40,4 @@ test-coverage:
 	docker compose exec app bin/phpunit --coverage-html var/coverage
 
 analyse:
-	docker compose exec app vendor/bin/phpstan analyse --no-progress
+	docker compose exec app php -d memory_limit=512M vendor/bin/phpstan analyse --no-progress
