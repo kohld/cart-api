@@ -24,8 +24,6 @@ final class AuthController extends AbstractController
     }
 
     /**
-     * Register a new user.
-     *
      * Creates a new user account with associated shopping cart.
      *
      * @param RegisterRequest $registerRequest The registration request containing user data
@@ -49,8 +47,6 @@ final class AuthController extends AbstractController
     }
 
     /**
-     * Login endpoint.
-     *
      * This method is intercepted by LexikJWT bundle and never executed.
      * The bundle handles JWT token generation automatically.
      *
