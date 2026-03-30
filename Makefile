@@ -1,4 +1,4 @@
-.PHONY: setup up down composer-install composer-update migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse
+.PHONY: setup up down composer-install composer-update migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse audit
 
 setup:
 	./setup_project.sh
@@ -41,3 +41,6 @@ test-coverage:
 
 analyse:
 	docker compose exec app php -d memory_limit=512M vendor/bin/phpstan analyse --no-progress
+
+audit:
+	docker compose exec app composer audit

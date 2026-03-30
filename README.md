@@ -47,6 +47,8 @@ images will be purged. Project files are preserved.
 
 ```bash
 make setup
+
+make fixtures
 ```
 
 > During setup, a prompt may appear: **Docker configuration from recipes**.
@@ -259,6 +261,7 @@ All common commands are available via `make`:
 | `make test` | Run the test suite |
 | `make test-coverage` | Run tests and generate HTML coverage report in `var/coverage` |
 | `make analyse` | Run PHPStan static analysis |
+| `make audit` | Check dependencies for known security vulnerabilities |
 
 ### Code Style
 
