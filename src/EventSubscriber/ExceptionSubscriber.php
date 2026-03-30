@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final readonly class ExceptionSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
     }
 
@@ -40,9 +40,9 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
             }
 
             $event->setResponse($this->errorResponse(
-                'Unprocessable Content',
-                Response::HTTP_UNPROCESSABLE_ENTITY,
-                $violations
+                error: 'Unprocessable Content',
+                status: Response::HTTP_UNPROCESSABLE_ENTITY,
+                violations: $violations,
             ));
 
             return;
@@ -51,8 +51,8 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
         if ($exception instanceof HttpExceptionInterface) {
             $statusCode = $exception->getStatusCode();
             $event->setResponse($this->errorResponse(
-                Response::$statusTexts[$statusCode] ?? 'Error',
-                $statusCode,
+                error: Response::$statusTexts[$statusCode] ?? 'Error',
+                status: $statusCode,
                 headers: $exception->getHeaders(),
             ));
 
@@ -61,15 +61,22 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
 
         $this->logger->error($exception->getMessage(), ['exception' => $exception]);
 
-        $event->setResponse($this->errorResponse('Internal Server Error', Response::HTTP_INTERNAL_SERVER_ERROR));
+        $event->setResponse($this->errorResponse(
+            error: 'Internal Server Error',
+            status: Response::HTTP_INTERNAL_SERVER_ERROR
+        ));
     }
 
     /**
      * @param list<array{field: string, message: string}> $violations
      * @param array<string, string>                       $headers
      */
-    private function errorResponse(string $error, int $status, array $violations = [], array $headers = []): JsonResponse
-    {
+    private function errorResponse(
+        string $error,
+        int $status,
+        array $violations = [],
+        array $headers = [],
+    ): JsonResponse {
         return new JsonResponse(
             ['error' => $error, 'violations' => $violations],
             $status,

@@ -51,7 +51,11 @@ final readonly class CartService
             return $cart;
         }
 
-        $cartItem = new CartItem($cart, $product, $request->getQuantity());
+        $cartItem = new CartItem(
+            cart: $cart,
+            product: $product,
+            quantity: $request->getQuantity()
+        );
         $cart->getItems()->add($cartItem);
         $this->cartItemRepository->save($cartItem);
 

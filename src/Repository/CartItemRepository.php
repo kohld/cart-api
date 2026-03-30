@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<CartItem>
  */
-final class CartItemRepository extends ServiceEntityRepository
+class CartItemRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
