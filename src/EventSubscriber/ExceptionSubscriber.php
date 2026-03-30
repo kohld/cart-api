@@ -63,6 +63,10 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
         $event->setResponse($this->errorResponse('Internal Server Error', Response::HTTP_INTERNAL_SERVER_ERROR));
     }
 
+    /**
+     * @param list<array{field: string, message: string}> $violations
+     * @param array<string, string> $headers
+     */
     private function errorResponse(string $error, int $status, array $violations = [], array $headers = []): JsonResponse
     {
         return new JsonResponse(
