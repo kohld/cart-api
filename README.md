@@ -101,7 +101,11 @@ Public. Creates a new user and an associated cart.
 // 201
 {
     "id": "uuid",
-    "email": "user@example.com"
+    "email": "user@example.com",
+    "_links": {
+        "login": { "href": "/api/v1/auth/login", "method": "POST" },
+        "cart":  { "href": "/api/v1/carts/me", "method": "GET" }
+    }
 }
 ```
 
@@ -146,13 +150,23 @@ Authorization: Bearer <token>
             "product": {
                 "id": "uuid",
                 "name": "iPhone 14 Pro (refurbished)",
-                "articleNumber": "APL-IP14P-256-SG"
+                "articleNumber": "APL-IP14P-256-SG",
+                "price": "649.99",
+                "_links": []
             },
             "quantity": 2,
-            "price": "649.99"
+            "price": "649.99",
+            "_links": {
+                "update": { "href": "/api/v1/carts/me/items/uuid", "method": "PATCH" },
+                "delete": { "href": "/api/v1/carts/me/items/uuid", "method": "DELETE" }
+            }
         }
     ],
-    "total": "1299.98"
+    "total": "1299.98",
+    "_links": {
+        "self":    { "href": "/api/v1/carts/me", "method": "GET" },
+        "addItem": { "href": "/api/v1/carts/me/items", "method": "POST" }
+    }
 }
 ```
 
@@ -175,7 +189,7 @@ Authorization: Bearer <token>
     "quantity": 1
 }
 
-// 201 - returns updated cart (same as GET /api/v1/carts/me)
+// 201 - returns updated cart (same structure as GET /api/v1/carts/me)
 ```
 
 </details>
@@ -195,7 +209,7 @@ Authorization: Bearer <token>
     "quantity": 3
 }
 
-// 200 - returns updated cart (same as GET /api/v1/carts/me)
+// 200 - returns updated cart (same structure as GET /api/v1/carts/me)
 ```
 
 </details>
