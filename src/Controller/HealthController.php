@@ -27,10 +27,10 @@ final class HealthController extends AbstractController
 
     /**
      * Health check endpoint.
-     * 
+     *
      * Checks the database connection and returns the overall health status.
      * Logs database connection failures with structured error information.
-     * 
+     *
      * @return JsonResponse JSON response containing health status and database connectivity
      */
     #[Route('', methods: ['GET'])]

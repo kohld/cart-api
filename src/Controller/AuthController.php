@@ -23,6 +23,15 @@ final class AuthController extends AbstractController
     ) {
     }
 
+    /**
+     * Register a new user.
+     *
+     * Creates a new user account with associated shopping cart.
+     *
+     * @param RegisterRequest $registerRequest The registration request containing user data
+     *
+     * @return JsonResponse JSON response containing the created user data
+     */
     #[Route('/register', methods: ['POST'])]
     public function register(
         #[MapRequestPayload] RegisterRequest $registerRequest,
@@ -39,6 +48,16 @@ final class AuthController extends AbstractController
         return $response;
     }
 
+    /**
+     * Login endpoint.
+     *
+     * This method is intercepted by LexikJWT bundle and never executed.
+     * The bundle handles JWT token generation automatically.
+     *
+     * @return never This method never returns normally
+     *
+     * @throws LogicException Always thrown as this method should not be called directly
+     */
     /**
      * @throws LogicException
      */
