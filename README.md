@@ -17,6 +17,7 @@ cart functionality: a user account is required to interact with the cart. Authen
   - [Fixtures](#fixtures)
 - [Decisions](#decisions)
   - [Cart with User association](#cart-with-user-association)
+  - [UUID as primary key](#uuid-as-primary-key)
   - [PHP 8.4 property hooks](#php-84-property-hooks)
   - [No checkout endpoint](#no-checkout-endpoint)
   - [Cart URL design: `/me` vs. explicit cart UUID](#cart-url-design-me-vs-explicit-cart-uuid)
@@ -276,6 +277,18 @@ The client receives the UUID on creation and sends it with every request in the 
 
 **Guest cart approach:** If a guest cart were desired, a client-generated UUID would be sent with
 `POST /carts/{cartId|cartUuid}` and used in the URL instead of `/carts/me`.
+
+### UUID as primary key
+
+All entities use UUID as their primary key, exposed directly in API responses.
+
+A sequential integer ID as PK with a separate UUID field was considered, but rejected: UUID is time-based and therefore
+approximately sequential, which avoids the index fragmentation issues of random UUIDs.
+
+UUIDs are exposed in responses but are not guessable or enumerable, unlike integer IDs.
+
+**Ownership is additionally enforced in the service layer:** a cart item is only accessible if it belongs to the
+authenticated user's cart, regardless of whether the UUID is known.
 
 ### PHP 8.4 property hooks
 
