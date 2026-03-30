@@ -25,6 +25,8 @@ cart functionality: a user account is required to interact with the cart. Authen
 - [Learnings](#learnings)
   - [JWT (Symfony Integration with LexikJWT)](#jwt-symfony-integration-with-lexikjwt)
   - [MapRequestPayload](#maprequestpayload)
+- [Disclaimer](#disclaimer)
+  - [AI Usage](#ai-usage)
 
 ---
 
@@ -355,3 +357,14 @@ automatically by the JWT firewall.
 ### MapRequestPayload
 
 Introduced in Symfony 6.3, this attribute replaces manual request DTO deserialization and validation in one step.
+
+---
+
+# Disclaimer
+
+## AI Usage
+
+The Docker and nginx setup was generated with the assistance of AI.
+
+AI was also used to answer questions around newer Symfony features and improvements, such as the use of
+`#[MapRequestPayload]` over manual request deserialization.
