@@ -12,9 +12,9 @@ cart functionality: a user account is required to interact with the cart. Authen
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Development](#development)
+  - [Makefile](#makefile)
   - [Code Style](#code-style)
   - [Fixtures](#fixtures)
-  - [Makefile](#makefile)
 - [Decisions](#decisions)
   - [Cart with User association](#cart-with-user-association)
   - [PHP 8.4 property hooks](#php-84-property-hooks)
@@ -273,6 +273,9 @@ The client receives the UUID on creation and sends it with every request in the 
 - Ownership check
 
 **But:** Anyone who knows the UUID can view and manipulate the cart. This means no protection for buyers.
+
+**Guest cart approach:** If a guest cart were desired, a client-generated UUID would be sent with
+`POST /carts/{cartId|cartUuid}` and used in the URL instead of `/carts/me`.
 
 ### PHP 8.4 property hooks
 
