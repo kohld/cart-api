@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,20 @@ final class HealthController extends AbstractController
     private const string UNAVAILABLE = 'unavailable';
     private const string ERROR = 'error';
 
-    public function __construct(private readonly Connection $connection)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly LoggerInterface $logger,
+    ) {
     }
 
+    /**
+     * Health check endpoint.
+     * 
+     * Checks the database connection and returns the overall health status.
+     * Logs database connection failures with structured error information.
+     * 
+     * @return JsonResponse JSON response containing health status and database connectivity
+     */
     #[Route('', methods: ['GET'])]
     public function health(): JsonResponse
     {
@@ -30,10 +41,14 @@ final class HealthController extends AbstractController
             $databaseStatus = self::OK;
         } catch (DBALException $e) {
             $databaseStatus = self::UNAVAILABLE;
-            error_log(sprintf(
-                'Database connection failed: %s',
-                $e->getMessage()
-            ));
+            $this->logger->error(
+                'Database connection failed during health check',
+                [
+                    'exception' => $e,
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                ]
+            );
         }
 
         $healthy = self::OK === $databaseStatus;
