@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Transformer;
 
 use App\DTO\Response\CartItemResponse as CartItemResponseDto;
-use App\DTO\Response\ProductResponse;
+use App\DTO\Response\ProductResponse as ProductResponseDto;
 use App\Entity\CartItem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -22,7 +22,7 @@ final readonly class CartItemTransformer
 
         return new CartItemResponseDto(
             id: $id,
-            product: new ProductResponse(
+            product: new ProductResponseDto(
                 id: (string) $product->getId(),
                 articleNumber: $product->getArticleNumber(),
                 name: $product->getName(),
