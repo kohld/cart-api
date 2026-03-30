@@ -17,4 +17,14 @@ final class RegisterRequest
     #[NotBlank]
     #[Length(min: 8)]
     public string $plainPassword;
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
 }

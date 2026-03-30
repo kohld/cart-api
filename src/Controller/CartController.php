@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\Request\AddCartItemRequest as AddCartItemRequestDto;
+use App\DTO\Request\UpdateCartItemRequest as UpdateCartItemRequestDto;
+use App\Entity\User;
 use App\Service\CartService;
 use App\Transformer\CartTransformer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/carts')]
@@ -19,49 +24,86 @@ final class CartController extends AbstractController
     ) {
     }
 
+    /**
+     * Get the cart for the authenticated user.
+     *
+     * @return JsonResponse JSON response containing the cart data
+     */
     #[Route('/me', methods: ['GET'])]
     public function show(): JsonResponse
     {
-        // Get authenticated user via $this->getUser()
-        // Load cart via CartService::getCart(User)
-        // Transform to CartResponse via CartTransformer::toCartResponseDto()
-        // Return 200 with CartResponse
-        // Set Cache-Control: no-store
+        /** @var User $user */
+        $user = $this->getUser();
+        $cart = $this->cartService->getCart($user);
+
+        return $this->json(
+            $this->cartTransformer->toCartResponseDto($cart),
+            Response::HTTP_OK,
+            ['Cache-Control' => 'no-store'],
+        );
     }
 
+    /**
+     * Add an item to the current authenticated user's cart.
+     *
+     * @param AddCartItemRequestDto $request The request containing product and quantity data
+     *
+     * @return JsonResponse JSON response containing the updated cart data
+     */
     #[Route('/me/items', methods: ['POST'])]
-    public function addItem(): JsonResponse
+    public function addItem(#[MapRequestPayload] AddCartItemRequestDto $request): JsonResponse
     {
-        // Validate request via #[MapRequestPayload] AddCartItemRequest
-        // Get authenticated user via $this->getUser()
-        // Load product by productId via CartService
-        // If product not found: return 404
-        // If item already in cart: add quantity to existing item
-        // Otherwise: add new CartItem with price snapshot from Product
-        // Return 201 with updated CartResponse
-        // Set Cache-Control: no-store
+        /** @var User $user */
+        $user = $this->getUser();
+        $cart = $this->cartService->addItem($this->cartService->getCart($user), $request);
+
+        return $this->json(
+            $this->cartTransformer->toCartResponseDto($cart),
+            Response::HTTP_CREATED,
+            ['Cache-Control' => 'no-store'],
+        );
     }
 
+    /**
+     * Update an items quantity in the authenticated user's cart.
+     *
+     * @param string                   $id      The ID of the cart item to update
+     * @param UpdateCartItemRequestDto $request The request containing updated quantity data
+     *
+     * @return JsonResponse JSON response containing the updated cart data
+     */
     #[Route('/me/items/{id}', methods: ['PATCH'])]
-    public function updateItem(string $id): JsonResponse
+    public function updateItem(string $id, #[MapRequestPayload] UpdateCartItemRequestDto $request): JsonResponse
     {
-        // Validate request via #[MapRequestPayload] UpdateCartItemRequest
-        // Get authenticated user via $this->getUser()
-        // Load CartItem by id via CartService
-        // If not found or does not belong to user cart: return 404
-        // Update quantity
-        // Return 200 with updated CartResponse
-        // Set Cache-Control: no-store
+        /** @var User $user */
+        $user = $this->getUser();
+        $cart = $this->cartService->updateItem($this->cartService->getCart($user), $id, $request);
+
+        return $this->json(
+            $this->cartTransformer->toCartResponseDto($cart),
+            Response::HTTP_OK,
+            ['Cache-Control' => 'no-store'],
+        );
     }
 
+    /**
+     * Remove an item from the authenticated user's cart.
+     *
+     * @param string $id The ID of the cart item to remove
+     *
+     * @return JsonResponse Empty response with HTTP 204 status
+     */
     #[Route('/me/items/{id}', methods: ['DELETE'])]
     public function removeItem(string $id): JsonResponse
     {
-        // Get authenticated user via $this->getUser()
-        // Load CartItem by id via CartService
-        // If not found or does not belong to user cart: return 404
-        // Remove CartItem
-        // Return 204 No Content
-        // Set Cache-Control: no-store
+        /** @var User $user */
+        $user = $this->getUser();
+        $this->cartService->removeItem($this->cartService->getCart($user), $id);
+
+        return $this->json(
+            null,
+            Response::HTTP_NO_CONTENT,
+            ['Cache-Control' => 'no-store']
+        );
     }
 }

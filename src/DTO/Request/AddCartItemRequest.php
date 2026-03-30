@@ -17,4 +17,14 @@ final class AddCartItemRequest
     #[NotBlank]
     #[Positive]
     public int $quantity;
+
+    public function getProductId(): string
+    {
+        return $this->productId;
+    }
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
 }

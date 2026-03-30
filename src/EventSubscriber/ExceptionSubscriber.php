@@ -18,6 +18,7 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
     public function __construct(private readonly LoggerInterface $logger)
     {
     }
+
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::EXCEPTION => 'onKernelException'];
@@ -65,7 +66,7 @@ final readonly class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * @param list<array{field: string, message: string}> $violations
-     * @param array<string, string> $headers
+     * @param array<string, string>                       $headers
      */
     private function errorResponse(string $error, int $status, array $violations = [], array $headers = []): JsonResponse
     {

@@ -4,41 +4,105 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Request\AddCartItemRequest;
-use App\DTO\Request\UpdateCartItemRequest;
+use App\DTO\Request\AddCartItemRequest as AddCartItemRequestDto;
+use App\DTO\Request\UpdateCartItemRequest as UpdateCartItemRequestDto;
 use App\Entity\Cart;
 use App\Entity\CartItem;
 use App\Entity\User;
+use App\Repository\CartItemRepository;
+use App\Repository\ProductRepository;
+use LogicException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Uid\Uuid;
 
-final class CartService
+final readonly class CartService
 {
+    public function __construct(
+        private ProductRepository $productRepository,
+        private CartItemRepository $cartItemRepository,
+    ) {
+    }
+
     public function getCart(User $user): Cart
     {
-        // Return the cart associated with the user
+        return $user->getCart() ?? throw new LogicException('User has no cart.');
     }
 
-    public function addItem(Cart $cart, AddCartItemRequest $request): Cart
+    public function addItem(Cart $cart, AddCartItemRequestDto $request): Cart
     {
-        // Load Product by request->productId
-        // If product not found: throw NotFoundException
-        // Check if CartItem with same product already exists in cart
-        // If yes: increase quantity by 1 and persist
-        // If no: create new CartItem with price snapshot from Product, persist
-        // Return updated Cart
+        $product = $this->productRepository->find($request->getProductId());
+
+        if (null === $product) {
+            throw new NotFoundHttpException('Product not found.');
+        }
+
+        $existingItem = null;
+        foreach ($cart->getItems() as $item) {
+            if ($item->getProduct()->getId()->equals($product->getId())) {
+                $existingItem = $item;
+                break;
+            }
+        }
+
+        if ($existingItem instanceof CartItem) {
+            $existingItem->setQuantity($existingItem->getQuantity() + $request->getQuantity());
+            $this->cartItemRepository->save($existingItem);
+
+            return $cart;
+        }
+
+        $cartItem = new CartItem($cart, $product, $request->getQuantity());
+        $cart->getItems()->add($cartItem);
+        $this->cartItemRepository->save($cartItem);
+
+        return $cart;
     }
 
-    public function updateItem(Cart $cart, string $itemId, UpdateCartItemRequest $request): CartItem
+    /**
+     * @throws NotFoundHttpException If the cart item is not found
+     */
+    public function updateItem(Cart $cart, string $itemId, UpdateCartItemRequestDto $request): Cart
     {
-        // Find CartItem by id within the cart
-        // If not found: throw NotFoundException
-        // Update quantity
-        // Persist and return updated CartItem
+        $cartItem = $this->findItemInCart($cart, $itemId);
+        $cartItem->setQuantity($request->getQuantity());
+        $this->cartItemRepository->save($cartItem);
+
+        return $cart;
     }
 
+    /**
+     * @throws NotFoundHttpException If the cart item is not found
+     */
     public function removeItem(Cart $cart, string $itemId): void
     {
-        // Find CartItem by id within the cart
-        // If not found: throw NotFoundException
-        // Remove CartItem and flush
+        $cartItem = $this->findItemInCart($cart, $itemId);
+
+        $this->cartItemRepository->remove($cartItem);
+    }
+
+    /**
+     * Find a specific cart item by its ID.
+     *
+     * Searches through the cart's items collection for a matching UUID.
+     * Throws NotFoundHttpException if the item is not found.
+     *
+     * @param Cart   $cart   The cart to search in
+     * @param string $itemId The UUID of the cart item to find
+     *
+     * @return CartItem The found cart item
+     *
+     * @throws NotFoundHttpException If the cart item is not found
+     */
+    private function findItemInCart(Cart $cart, string $itemId): CartItem
+    {
+        $uuid = Uuid::fromString($itemId);
+
+        foreach ($cart->getItems() as $item) {
+            if ($item->getId()->equals($uuid)) {
+                return $item;
+            }
+        }
+
+        throw new NotFoundHttpException('Cart item not found.');
     }
 }

@@ -31,9 +31,9 @@ final readonly class UserService
     public function register(RegisterRequestDto $request): User
     {
         $user = new User();
-        $user->setEmail($request->email);
+        $user->setEmail($request->getEmail());
         $user->setPassword(
-            $this->passwordHasher->hashPassword($user, $request->plainPassword)
+            $this->passwordHasher->hashPassword($user, $request->getPlainPassword())
         );
 
         $cart = new Cart($user);

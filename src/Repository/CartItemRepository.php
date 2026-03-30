@@ -23,4 +23,10 @@ final class CartItemRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($cartItem);
         $this->getEntityManager()->flush();
     }
+
+    public function remove(CartItem $cartItem): void
+    {
+        $this->getEntityManager()->remove($cartItem);
+        $this->getEntityManager()->flush();
+    }
 }

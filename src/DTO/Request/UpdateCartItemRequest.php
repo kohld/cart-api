@@ -12,4 +12,9 @@ final class UpdateCartItemRequest
     #[NotBlank]
     #[Positive]
     public int $quantity;
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
 }
