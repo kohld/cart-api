@@ -38,10 +38,10 @@ jwt-keys:
 	docker compose exec app bin/console lexik:jwt:generate-keypair --skip-if-exists
 
 test:
-	docker compose exec app bin/phpunit
+	docker compose exec app vendor/bin/phpunit
 
 test-coverage:
-	docker compose exec app bin/phpunit --coverage-html var/coverage
+	docker compose exec app vendor/bin/phpunit --coverage-html var/coverage
 
 analyse:
 	docker compose exec app php -d memory_limit=512M vendor/bin/phpstan analyse --no-progress
