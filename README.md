@@ -71,9 +71,10 @@ make down
 
 ## API Documentation
 
-Swagger/OpenAPI was skipped for this project. Instead, the API is documented via README and an Insomnia export.
+Swagger/OpenAPI was skipped for this project to keep the proof of concept clean. The NelmioApiDocBundle would require
+Twig as an additional dependency, unnecessarily bloating the project size.
 
-API documentation is provided in two forms:
+Instead, the API is documented via README and an Insomnia export:
 
 - **README:** all endpoints are documented below with request and response examples
 - **Insomnia Export:** a ready-to-import collection is available at `docs/insomnia.yaml` for local testing
