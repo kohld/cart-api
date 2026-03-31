@@ -253,6 +253,7 @@ All common commands are available via `make`:
 | `make down` | Stop all containers |
 | `make composer-install` | Install dependencies from lock file |
 | `make composer-update` | Update dependencies and lock file |
+| `make composer-require package="vendor/package"` | Install a new package |
 | `make migration` | Generate a new migration based on entity changes |
 | `make migrate` | Run database migrations |
 | `make fixtures` | Load sample data (purges existing data) |

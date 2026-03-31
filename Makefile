@@ -1,4 +1,4 @@
-.PHONY: setup up down composer-install composer-update migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse audit
+.PHONY: setup up down composer-install composer-update composer-require migration migrate fixtures cs-fix cs-check jwt-keys test test-coverage analyse audit
 
 setup:
 	./setup_project.sh
@@ -14,6 +14,10 @@ composer-install:
 
 composer-update:
 	docker compose exec app composer update
+
+# make composer-require package="symfony/uid --dev"
+composer-require:
+	docker compose exec app composer require $(package)
 
 migration:
 	docker compose exec app bin/console doctrine:migrations:diff
