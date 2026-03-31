@@ -23,4 +23,4 @@ jobs:
         run: composer install --no-scripts --prefer-dist
 
       - name: Run PHP CS Fixer
-        run: make cs-check
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
